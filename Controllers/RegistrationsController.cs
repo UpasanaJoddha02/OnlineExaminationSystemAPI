@@ -105,5 +105,15 @@ namespace OnlineExaminationSystemAPI.Controllers
         {
             return _context.Registration.Any(e => e.Id == id);
         }
+        [HttpPost]
+        [Route("CheckLogin")]
+        public async Task<ActionResult<Registration>> CheckLogin(Registration objRegistration) {
+            var registration = await  _context.Registration.Where(e => e.Email == objRegistration.Email && e.Password == objRegistration.Password).FirstOrDefaultAsync();
+            if (registration == null)
+            {
+                return NotFound();
+            }
+            return registration;
+        }
     }
 }
