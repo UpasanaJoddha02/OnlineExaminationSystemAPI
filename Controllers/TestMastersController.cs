@@ -27,6 +27,19 @@ namespace OnlineExaminationSystemAPI.Controllers
             return await _context.TestMaster.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("GetTests/{createdBy}")]
+        public async Task<ActionResult<IEnumerable<TestMaster>>> GetTests(int createdBy)
+        {
+            var tests = await _context.TestMaster.Where(e => e.CreatedBy == createdBy).ToListAsync();
+            if (tests == null)
+            {
+                return NotFound();
+            }
+            return tests;
+            //return await _context.TestMaster.ToListAsync();
+        }
+
         // GET: api/TestMasters/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TestMaster>> GetTestMaster(int id)

@@ -12,6 +12,9 @@ namespace OnlineExaminationSystemAPI.Models
         public int TestId { get; set; }
         public string TestName { get; set; }
         public string Duration { get; set; }
-        public string Type { get; set; }
+        public DateTime? ScheduleFrom { get; set; }
+        public DateTime? ScheduleTo { get; set; }
+
+        public int CreatedBy { get; set; }
     }
 }

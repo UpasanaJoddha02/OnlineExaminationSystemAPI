@@ -27,8 +27,23 @@ namespace OnlineExaminationSystemAPI.Controllers
             return await _context.QuestionMaster.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("GetQuestions/{createdBy}")]
+        public async Task<ActionResult<IEnumerable<QuestionMaster>>> GetQuestions(int createdBy)
+        {
+            //var questions = await _context.QuestionMaster.FindAsync(createdBy);
+            var questions = await _context.QuestionMaster.Where(e => e.CreatedBy == createdBy).ToListAsync();
+            if (questions == null)
+            {
+                return NotFound();
+            }
+            return questions;
+            //return await _context.QuestionMaster.ToListAsync();
+        }
+
         // GET: api/QuestionMasters/5
         [HttpGet("{id}")]
+        
         public async Task<ActionResult<QuestionMaster>> GetQuestionMaster(int id)
         {
             var questionMaster = await _context.QuestionMaster.FindAsync(id);
@@ -45,6 +60,7 @@ namespace OnlineExaminationSystemAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        
         public async Task<IActionResult> PutQuestionMaster(int id, QuestionMaster questionMaster)
         {
             if (id != questionMaster.Id)
