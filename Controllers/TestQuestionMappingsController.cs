@@ -27,6 +27,21 @@ namespace OnlineExaminationSystemAPI.Controllers
             return await _context.TestQuestionMapping.ToListAsync();
         }
 
+        [HttpGet("{id}")]
+        [Route("GetQuestions/{testId}")]
+        public async Task<ActionResult<IEnumerable<TestQuestionMapping>>> GetQuestions(int testId)
+        {
+            //var testQuestionMapping = await _context.TestQuestionMapping.FindAsync(id);
+            var questionIds = await _context.TestQuestionMapping.Where(e => e.TestId == testId).ToListAsync();
+
+            if (questionIds == null)
+            {
+                return NotFound();
+            }
+
+            return questionIds;
+        }
+
         // GET: api/TestQuestionMappings/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TestQuestionMapping>> GetTestQuestionMapping(int id)

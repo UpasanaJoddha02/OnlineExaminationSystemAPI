@@ -16,5 +16,10 @@ namespace OnlineExaminationSystemAPI.Models
         public DbSet<AnswerMaster> AnswerMaster { get; set; }
         public DbSet<TestQuestionMapping> TestQuestionMapping { get; set; }
         public DbSet<OnlineExaminationSystemAPI.Models.Registration> Registration { get; set; }
+        public DbSet<OnlineExaminationSystemAPI.Models.ResultMaster> ResultMaster { get; set; }
+        public DbSet<OnlineExaminationSystemAPI.Models.CalculatedResult> CalculatedResult { get; set; }
+
+        public DbSet<OnlineExaminationSystemAPI.Models.ResultList> ResultList { get; set; }
+
     }
 }

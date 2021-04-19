@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace OnlineExaminationSystemAPI.Models
 {
-    public class AnswerMaster
+    public class ResultMaster
     {
         [Key]
         public int Id { get; set; }
+
         public int TestId { get; set; }
-        public int QuestionId { get; set; }
+
         public int StudentId { get; set; }
-        public string SelectedAnswer { get; set; }
+
+        public int Marks { get; set; }
     }
 }

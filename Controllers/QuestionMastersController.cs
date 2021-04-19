@@ -41,9 +41,36 @@ namespace OnlineExaminationSystemAPI.Controllers
             //return await _context.QuestionMaster.ToListAsync();
         }
 
+        [HttpGet]
+        [Route("GetQuestionsByTestId/{TestId}")]
+        public async Task<ActionResult<IEnumerable<QuestionMaster>>> GetQuestionsByTestId(int TestId)
+        {
+            //var questions = await _context.QuestionMaster.FindAsync(createdBy);
+            //var questions = await _context.QuestionMaster.Where(e => e.CreatedBy == createdBy).ToListAsync();
+
+            //var questions = await _context.QuestionMaster.Join(_context.TestQuestionMapping,
+            //                                                        QM => QM.Id,
+            //                                                        TQM => TQM.QuestionId,
+            //                                                        (QM, TQM) => new { service = QM, asgnmt = TQM })
+            //                                                .Where(ssa => ssa.asgnmt.TestId == TestId)
+            //                                                .Select(ssa => ssa.service);
+            var questions = await (from QM in _context.QuestionMaster
+                             join TQM in _context.TestQuestionMapping on QM.Id equals TQM.QuestionId
+                             where TQM.TestId == TestId
+                             select QM).ToListAsync();
+
+
+            if (questions == null)
+            {
+                return NotFound();
+            }
+            return questions;
+            //return await _context.QuestionMaster.ToListAsync();
+        }
+
         // GET: api/QuestionMasters/5
         [HttpGet("{id}")]
-        
+
         public async Task<ActionResult<QuestionMaster>> GetQuestionMaster(int id)
         {
             var questionMaster = await _context.QuestionMaster.FindAsync(id);
@@ -60,7 +87,7 @@ namespace OnlineExaminationSystemAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        
+
         public async Task<IActionResult> PutQuestionMaster(int id, QuestionMaster questionMaster)
         {
             if (id != questionMaster.Id)
